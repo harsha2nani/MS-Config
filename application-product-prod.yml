@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: product-service-prod
+
+  dataSource:
+    url: jdbc:mysql://localhost:3306/proddb
+    username: root
+    password: root
+
+server:
+  port: 2020
