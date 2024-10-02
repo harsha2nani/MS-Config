@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: product-service-dev
+
+  dataSource:
+    url: jdbc:mysql://localhost:3306/harsha_mart
+    username: root
+    password: root
+
+server:
+  port: 8081
