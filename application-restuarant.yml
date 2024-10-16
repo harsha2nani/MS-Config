@@ -9,7 +9,7 @@ eureka:
 
 management:
   health:
-    circuitbreaker:
+    circuitbreakers:
       enabled: true
   endpoints:
     web:
