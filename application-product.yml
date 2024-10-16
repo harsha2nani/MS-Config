@@ -15,4 +15,44 @@ management:
         exclude: caches
     health:
       show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      restuarantService:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNTBASED
+  retry: # this is mainly used to process the req which are interupted instead of having new req.ex money transfer.
+    instances:
+      restuarantService:
+        registerHealthIndicator: true
+        maxAttempts: 5
+        waitDuration: 500
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+  ratelimiter: # it is used to limit the incoming Requests coming from the client.
+    configs:
+      default:
+        limitForPeriod: 15 # 15 Requests per second
+        limitRefreshPeriod: 1s #After 1s again it resets the count
+        timeoutDuration: 100ms #the thread waiting period
+    instances:
+      restuarantService:
+        limitForPeriod: 10 #10 requests per second
+        limitRefreshPeriod: 1s
+        timeOutDuration: 100ms
+  timelimiter:
+    instances:
+      restuarantService:
+        timeout-duration: 2s
+
 
